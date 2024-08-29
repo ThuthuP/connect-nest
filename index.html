@@ -7,57 +7,63 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#profile">Profile</a></li>
-                <li><a href="#messages">Messages</a></li>
-                <li><a href="#notifications">Notifications</a></li>
-                <li><a href="#search">Search</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section id="home">
-            <h1>Welcome to ConnectNest</h1>
-            <div class="news-feed">
-                <!-- News feed content will go here -->
+    <div id="app">
+        <!-- Login Page -->
+        <div id="loginPage" class="login-page">
+            <h1>ConnectNest Login</h1>
+            <input type="text" id="usernameInput" placeholder="Enter your name">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <!-- Home Page -->
+        <div id="homePage" class="page">
+            <header>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <h1>Welcome, <span id="userName">User</span></h1>
+                <div class="nav-menu">
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </header>
+
+            <div class="profile">
+                <img id="profilePic" src="https://via.placeholder.com/100" alt="Profile Picture">
+                <div class="profile-details">
+                    <h2 id="profileName">Username</h2>
+                    <p id="profileBio" contenteditable="true">Bio goes here...</p>
+                    <p id="profileLocation" contenteditable="true">Location goes here...</p>
+                    <input type="file" id="profilePicInput" onchange="updateProfilePic()" />
+                    <textarea id="statusInput" placeholder="What's on your mind?"></textarea>
+                    <button onclick="updateStatus()">Update Status</button>
+                    <p id="statusFeedback"></p>
+                </div>
             </div>
-        </section>
-        
-        <section id="profile">
-            <h2>Your Profile</h2>
-            <div class="profile-info">
-                <!-- Profile info content will go here -->
+
+            <div class="status-update">
+                <h2>Status Updates</h2>
+                <div id="statusList"></div>
             </div>
-        </section>
-        
-        <section id="messages">
-            <h2>Messages</h2>
-            <div class="messages-list">
-                <!-- Messages content will go here -->
+
+            <div class="messages">
+                <div class="message-list" id="messageList"></div>
+                <div class="friends">
+                    <h2>Friends</h2>
+                    <ul id="friendsList"></ul>
+                </div>
+                <div class="message-input">
+                    <input type="text" id="messageInput" placeholder="Type your message">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
             </div>
-        </section>
-        
-        <section id="notifications">
-            <h2>Notifications</h2>
-            <div class="notifications-list">
-                <!-- Notifications content will go here -->
-            </div>
-        </section>
-        
-        <section id="search">
-            <h2>Search</h2>
-            <input type="text" placeholder="Search...">
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 ConnectNest</p>
-    </footer>
-    
-    <script src="script.js"></script>
+
+            <div id="notifications" class="notifications"></div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
+
