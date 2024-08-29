@@ -1,65 +1,88 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const profilePicForm = document.getElementById('profile-pic-form');
-    const profilePicUpload = document.getElementById('profile-pic-upload');
-    
-    // Handle profile picture upload
-    if (profilePicForm) {
-        profilePicForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const file = profilePicUpload.files[0];
-            if (file) {
-                // Implement file upload logic here
-                console.log('Profile picture uploaded:', file.name);
-                // Update profile picture
-                document.getElementById('profile-pic').src = URL.createObjectURL(file);
-            }
-        });
-    }
+const friends = [
+    { name: "Anele", profilePic: "https://via.placeholder.com/40" },
+    { name: "Ben", profilePic: "https://via.placeholder.com/40" },
+    { name: "Anne", profilePic: "https://via.placeholder.com/40" },
+    { name: "Kat", profilePic: "https://via.placeholder.com/40" },
+    { name: "Minnie", profilePic: "https://via.placeholder.com/40" }
+];
 
-    // Handle status form submission
-    const statusForm = document.getElementById('status-form');
-    if (statusForm) {
-        statusForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const statusText = statusForm.querySelector('textarea').value;
-            if (statusText) {
-                // Implement status update logic here
-                console.log('Status updated:', statusText);
-                // Display the status on the home page (or wherever needed)
-                const statusDisplay = document.getElementById('status-display');
-                if (statusDisplay) {
-                    statusDisplay.textContent = statusText;
-                }
-            }
-        });
+function login() {
+    const username = document.getElementById('usernameInput').value;
+    if (username.trim() === '') {
+        alert("Please enter your name.");
+        return;
     }
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('userName').textContent = username;
+    document.getElementById('profileName').textContent = username;
+    displayFriends();
+}
 
-    // Simulated notifications handling
-    const notificationButton = document.getElementById('notification-button');
-    if (notificationButton) {
-        notificationButton.addEventListener('click', () => {
-            // Implement notification retrieval logic here
-            alert('You have new notifications!');
-        });
-    }
+function logout() {
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'flex';
+}
 
-    // Simulated inbox access
-    const inboxButton = document.getElementById('inbox-button');
-    if (inboxButton) {
-        inboxButton.addEventListener('click', () => {
-            // Implement inbox retrieval logic here
-            alert('Opening your inbox...');
-        });
+function updateProfilePic() {
+    const fileInput = document.getElementById('profilePicInput');
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('profilePic').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
     }
+}
 
-    // Handle logout
-    const logoutButton = document.getElementById('logout-button');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', () => {
-            // Implement logout logic here
-            alert('Logging out...');
-            window.location.href = 'login.html'; // Redirect to login page
-        });
+function updateStatus() {
+    const status = document.getElementById('statusInput').value;
+    if (status.trim() === '') {
+        alert("Please enter a status.");
+        return;
     }
-});
+    const statusList = document.getElementById('statusList');
+    const statusItem = document.createElement('div');
+    statusItem.textContent = status;
+    statusList.appendChild(statusItem);
+    document.getElementById('statusInput').value = '';
+    document.getElementById('statusFeedback').textContent = 'Status updated successfully!';
+    setTimeout(() => {
+        document.getElementById('statusFeedback').textContent = '';
+    }, 2000);
+}
+
+function displayFriends() {
+    const friendsList = document.getElementById('friendsList');
+    friendsList.innerHTML = '';
+    friends.forEach(friend => {
+        const friendItem = document.createElement('li');
+        friendItem.innerHTML = `<img src="${friend.profilePic}" alt="${friend.name}"> ${friend.name}`;
+        friendItem.onclick = () => selectFriend(friend.name);
+        friendsList.appendChild(friendItem);
+    });
+}
+
+function selectFriend(friendName) {
+    document.getElementById('messageList').innerHTML = `<p>Selected friend: ${friendName}</p>`;
+}
+
+function sendMessage() {
+    const messageInput = document.getElementById('messageInput').value;
+    if (messageInput.trim() === '') {
+        alert("Please enter a message.");
+        return;
+    }
+    const messageList = document.getElementById('messageList');
+    const messageItem = document.createElement('p');
+    messageItem.textContent = messageInput;
+    messageList.appendChild(messageItem);
+    document.getElementById('messageInput').value = '';
+}
+
+function toggleMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.classList.toggle('open');
+}
 
